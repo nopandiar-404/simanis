@@ -90,7 +90,7 @@
                         <table id="data-tabel" width="120%"  class="table table-bordered text-nowrap border-bottom dataTable no-footer dtr-inline collapsed">
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0" width="7%">NO</th>
+                                    <th class="border-bottom-0" width="8%">NO</th>
                                     <th class="border-bottom-0">KODE</th>
                                     <th class="border-bottom-0">BARANG</th>
                                     <th class="border-bottom-0">JENIS</th>
