@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Inventaris PC')
+@section('title','Inventaris Barang')
 @section('content')
 <x-head-datatable/>
 <div class="container-fluid">
@@ -26,18 +26,19 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-7">
-                                    <div class="form-group">
+                            <div class="form-row">
+                                    <div class="form-group col-md-6">
                                         <label for="kode" class="form-label">Kode Barang <span class="text-danger">*</span></label>
                                         <input type="text" name="kode" readonly class="form-control">
                                         <input type="hidden" name="id"/>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-md-6">
                                         <label for="nama" class="form-label">Nama Barang <span class="text-danger">*</span></label>
                                         <input type="text" name="nama" class="form-control">
                                     </div>
-                                    <div class="form-group">
+                            </div>
+                            <div class="form-row">
+                                    <div class="form-group col-md-6">
                                         <label for="jenisbarang" class="form-label">Jenis Barang <span class="text-danger">*</span></label>
                                         <select name="jenisbarang" class="form-control">
                                             <option value="">-- Pilih Jenis --</option>
@@ -46,7 +47,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-md-6">
                                         <label for="satuan" class="form-label">Satuan Barang <span class="text-danger">*</span></label>
                                         <select name="satuan" class="form-control">
                                             <option value="">-- Pilih Satuan --</option>
@@ -55,7 +56,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                            </div>
+                            <div class="form-row">
+                                    <div class="form-group col-md-6">
                                         <label for="merk" class="form-label">Merk Barang <span class="text-danger">*</span></label>
                                         <select name="merk" class="form-control">
                                             <option value="">-- Pilih Merk --</option>
@@ -64,24 +67,14 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group item-count" id="item-count">
+                                    <div class="form-group col-md-6 item-count" id="item-count">
                                         <label for="harga" class="form-label">Jumlah Awal <span class="text-danger">*</span></label>
                                         <input type="number" value="0" name="jumlah" class="form-control">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-md-6">
                                         <label for="harga" class="form-label">Harga Barang <span class="text-danger">*</span></label>
                                         <input type="text"  id="harga" name="harga" class="form-control" placeholder="RP. 0">
                                     </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label for="title" class="form-label">Foto</label>
-                                        <center>
-                                            <img src="{{asset('default.png')}}" width="80%" alt="profile-user" id="outputImg" class="">
-                                        </center>
-                                        <input class="form-control mt-5" id="GetFile" name="photo" type="file"  accept=".png,.jpeg,.jpg,.svg">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -89,25 +82,24 @@
                             <button type="button" class="btn btn-success" id="simpan">Simpan</button>
                         </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="data-tabel" width="100%"  class="table table-bordered text-nowrap border-bottom dataTable no-footer dtr-inline collapsed">
+                        <table id="data-tabel" width="120%"  class="table table-bordered text-nowrap border-bottom dataTable no-footer dtr-inline collapsed">
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0" width="8%">NO</th>
-                                    <th class="border-bottom-0">GAMBAR</th>
+                                    <th class="border-bottom-0" width="7%">NO</th>
                                     <th class="border-bottom-0">KODE</th>
-                                    <th class="border-bottom-0">NAMA</th>
+                                    <th class="border-bottom-0">BARANG</th>
                                     <th class="border-bottom-0">JENIS</th>
                                     <th class="border-bottom-0">SATUAN</th>
                                     <th class="border-bottom-0">MERK</th>
                                     <th class="border-bottom-0">STOK AWAL</th>
                                     <th class="border-bottom-0">HARGA</th>
                                     @if(Auth::user()->role->name != 'staff')
-                                    <th class="border-bottom-0" width="1%">Tindakan</th>
+                                    <th class="border-bottom-0" width="1%">TINDAKAN</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -164,9 +156,6 @@
                     }
                 },
                 {
-                    data:'img',
-                    name:'img'
-                },{
                     data:'code',
                     name:'code'
                 },{
@@ -205,14 +194,12 @@
     function simpan(){
         const name = $("input[name='nama']").val();
         const code = $("input[name='kode']").val();
-        const image = $("#GetFile")[0].files;
         const category_id = $("select[name='jenisbarang']").val();
         const unit_id = $("select[name='satuan']").val();
         const brand_id = $("select[name='merk']").val();
         const price = $("input[name='harga']").val();
         // return console.log({name,code,category_id,unit_id,brand_id,price,quantity});
         const Form = new FormData();
-        Form.append('image', image[0]);
         Form.append('code', code);
         Form.append('name', name);
         Form.append('category_id', category_id);
@@ -256,7 +243,6 @@
     function ubah(){
         const name = $("input[name='nama']").val();
         const code = $("input[name='kode']").val();
-        const image = $("#GetFile")[0].files;
         const category_id = $("select[name='jenisbarang']").val();
         const unit_id = $("select[name='satuan']").val();
         const brand_id = $("select[name='merk']").val();
@@ -265,7 +251,6 @@
         // return console.log({name,code,category_id,unit_id,brand_id,price,quantity});
         const Form = new FormData();
         Form.append('id', $("input[name='id']").val());
-        Form.append('image', image[0]);
         Form.append('code', code);
         Form.append('name', name);
         Form.append('category_id', category_id);
